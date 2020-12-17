@@ -1,13 +1,11 @@
-package pl.lgawin.safelycamera
+package pl.lgawin.safelycamera.dev
 
 import android.graphics.Bitmap
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class MainActivityViewModel : ViewModel() {
+class DevActivityViewModel : ViewModel() {
 
     private var _thumbnail = MutableLiveData<Bitmap>()
     val thumbnail = _thumbnail as LiveData<Bitmap>
@@ -16,9 +14,4 @@ class MainActivityViewModel : ViewModel() {
         set(value) {
             _thumbnail.value = value
         }
-}
-
-@BindingAdapter("bitmap")
-fun setBitmap(view: ImageView, bitmap: Bitmap?) {
-    view.setImageBitmap(bitmap)
 }
