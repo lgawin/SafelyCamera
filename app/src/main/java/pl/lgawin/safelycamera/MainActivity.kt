@@ -2,7 +2,6 @@ package pl.lgawin.safelycamera
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -19,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         ExternalActivityCameraDispatcher(
             this,
             REQUEST_IMAGE_CAPTURE,
-            onResult = { viewModel.bitmap = it.extras?.get("data") as Bitmap },
+            onResult = { viewModel.bitmap = it },
             onCancel = { toast("RESULT_CANCELED") },
         )
     }
