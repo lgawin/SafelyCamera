@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Safely Camera</string>
+    <string name="take_picture_label">Take a picture</string>
 </resources>
