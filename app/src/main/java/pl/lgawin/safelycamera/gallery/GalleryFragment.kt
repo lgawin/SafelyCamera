@@ -1,5 +1,6 @@
 package pl.lgawin.safelycamera.gallery
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ListAdapter
+import pl.lgawin.safelycamera.camera.ExternalActivityCameraDispatcher.Companion.externalIntentCameraDispatcher
 import pl.lgawin.safelycamera.databinding.FragmentGalleryBinding
 import pl.lgawin.safelycamera.domain.Photo
 import pl.lgawin.safelycamera.domain.PhotosRepository
@@ -26,10 +28,18 @@ class GalleryFragment constructor(private val photosRepository: PhotosRepository
 
     private val photosAdapter: ListAdapter<Photo, PhotoViewHolder> = GalleryAdapter()
 
+    private val cameraDispatcher by lazy {
+        externalIntentCameraDispatcher(
+            this,
+            REQUEST_IMAGE_CAPTURE,
+            onResult = { viewModel.refresh() },
+        ) { toast("RESULT_CANCELED") }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragmentGalleryBinding.inflate(inflater, container, false)
             .apply {
-                floatingActionButton.setOnClickListener { toast("Fab clicked") }
+                floatingActionButton.setOnClickListener { cameraDispatcher.dispatchTakePicture() }
                 adapter = photosAdapter
                 vm = viewModel
                 lifecycleOwner = this@GalleryFragment
@@ -39,5 +49,16 @@ class GalleryFragment constructor(private val photosRepository: PhotosRepository
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.photos.observe(viewLifecycleOwner, Observer(photosAdapter::submitList))
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            REQUEST_IMAGE_CAPTURE -> cameraDispatcher.dispatchResult(resultCode, data)
+            else -> super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    companion object {
+        private const val REQUEST_IMAGE_CAPTURE = 3452
     }
 }

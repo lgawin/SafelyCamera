@@ -11,12 +11,15 @@ import pl.lgawin.safelycamera.domain.PhotosRepository
 class GalleryViewModel(private val photosRepository: PhotosRepository) : ViewModel() {
 
     private val _photos = MutableLiveData<List<Photo>>()
+    val photos: LiveData<List<Photo>> get() = _photos
 
     init {
-        viewModelScope.launch {
-            _photos.value = photosRepository.getPhotos()
-        }
+        loadPhotos()
     }
 
-    val photos: LiveData<List<Photo>> get() = _photos
+    private fun loadPhotos() = viewModelScope.launch {
+        _photos.value = photosRepository.getPhotos()
+    }
+
+    fun refresh() = loadPhotos()
 }
