@@ -1,19 +1,16 @@
 package pl.lgawin.safelycamera
 
 import android.os.Bundle
-import android.os.Environment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
-import pl.lgawin.safelycamera.dev.stubRepository
 import pl.lgawin.safelycamera.domain.PhotosRepository
 import pl.lgawin.safelycamera.gallery.GalleryFragment
-import java.io.File
+import pl.lgawin.safelycamera.storage.PhotosStorage
 
 class MainActivity : AppCompatActivity() {
 
-    private val storageDir: File by lazy { getExternalFilesDir(Environment.DIRECTORY_PICTURES)!! }
-    private val photosRepository: PhotosRepository by lazy { stubRepository(storageDir) }
+    private val photosRepository: PhotosRepository by lazy { PhotosStorage(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportFragmentManager.fragmentFactory = object : FragmentFactory() {

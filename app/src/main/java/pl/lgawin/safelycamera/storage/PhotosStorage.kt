@@ -9,6 +9,8 @@ import okio.cipherSink
 import okio.cipherSource
 import okio.sink
 import okio.source
+import pl.lgawin.safelycamera.domain.Photo
+import pl.lgawin.safelycamera.domain.PhotosRepository
 import pl.lgawin.safelycamera.security.Ciphers
 import pl.lgawin.safelycamera.utils.byteArrayFromHexString
 import pl.lgawin.safelycamera.utils.toHexString
@@ -17,7 +19,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class PhotosStorage(private val directory: File, private val tempDir: File) {
+class PhotosStorage(private val directory: File, private val tempDir: File) : PhotosRepository {
 
     constructor(context: Context) : this(
         context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!,
@@ -50,4 +52,6 @@ class PhotosStorage(private val directory: File, private val tempDir: File) {
         val iv = data.extension.byteArrayFromHexString()
         return data.source().cipherSource(Ciphers.decryptMode(iv))
     }
+
+    override suspend fun getPhotos(): List<Photo> = directory.listFiles()?.toList().orEmpty().map { it.absolutePath }
 }
