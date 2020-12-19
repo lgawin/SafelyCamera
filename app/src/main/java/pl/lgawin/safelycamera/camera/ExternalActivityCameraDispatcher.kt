@@ -8,14 +8,12 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.os.Environment
 import android.provider.MediaStore
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import pl.lgawin.safelycamera.BuildConfig
+import pl.lgawin.safelycamera.storage.PhotosStorage
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.Date
 
 class ExternalActivityCameraDispatcher(
     private val context: Context,
@@ -25,15 +23,13 @@ class ExternalActivityCameraDispatcher(
 ) : CameraDispatcher {
 
     private var file: File? = null
+    private val storage = PhotosStorage(context)
 
     override fun dispatchTakePicture(): File? {
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
-        file = File.createTempFile("J${timeStamp}_", ".jpg", storageDir)
+        file = storage.createTempFile()
         file?.let {
             val photoUri = FileProvider.getUriForFile(context, "${BuildConfig.APPLICATION_ID}.fileprovider", it)
-            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                .putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
             try {
                 startActivityForResult(takePictureIntent)
                 return it
@@ -52,11 +48,15 @@ class ExternalActivityCameraDispatcher(
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun internalSuccess(data: Intent?) {
         file?.let {
+            // TODO (change to coil or add scaling?, or just return nothing)
             val bmOptions = BitmapFactory.Options().apply { inJustDecodeBounds = false }
-            // TODO
-            onResult(BitmapFactory.decodeFile(it.absolutePath, bmOptions))
+            val bitmap = BitmapFactory.decodeFile(it.absolutePath, bmOptions)
+            storage.moveToSecure(it)
+            file = null
+            onResult(bitmap)
         } ?: onResult(null)
     }
 
@@ -87,3 +87,4 @@ class ExternalActivityCameraDispatcher(
         }
     }
 }
+

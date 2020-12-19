@@ -1,5 +1,6 @@
 package pl.lgawin.safelycamera.gallery
 
+import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -8,31 +9,45 @@ import android.widget.LinearLayout.LayoutParams
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
 import coil.load
+import coil.util.DebugLogger
+import pl.lgawin.safelycamera.BuildConfig
 import pl.lgawin.safelycamera.R
 import pl.lgawin.safelycamera.domain.Photo
+import pl.lgawin.safelycamera.storage.PhotosStorage
 import java.io.File
 
-class GalleryAdapter : ListAdapter<String, PhotoViewHolder>(PhotoItemDiffCallback()) {
+class GalleryAdapter(context: Context) : ListAdapter<String, PhotoViewHolder>(PhotoItemDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PhotoViewHolder(parent)
+    private val loader = ImageLoader.Builder(context).run {
+        if (BuildConfig.DEBUG) logger(DebugLogger())
+        componentRegistry { add(decryptingFetcher(PhotosStorage(context))) }
+        build()
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PhotoViewHolder(loader, parent)
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) = holder.bind(getItem(position))
 }
 
-class PhotoViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class PhotoViewHolder private constructor(
+    private val loader: ImageLoader,
+    itemView: View
+) : RecyclerView.ViewHolder(itemView) {
 
     private val imageView get() = itemView as ImageView
 
     fun bind(item: Photo) {
-        imageView.load(File(item)) {
+        imageView.load(File(item), loader) {
             placeholder(R.drawable.ic_image)
+            error(R.drawable.ic_image_broken)
         }
     }
 
     companion object {
-        operator fun invoke(parent: ViewGroup): PhotoViewHolder =
-            PhotoViewHolder(ImageView(parent.context).apply {
+        operator fun invoke(loader: ImageLoader, parent: ViewGroup): PhotoViewHolder =
+            PhotoViewHolder(loader, ImageView(parent.context).apply {
                 layoutParams = LayoutParams(MATCH_PARENT, 720)
             })
     }

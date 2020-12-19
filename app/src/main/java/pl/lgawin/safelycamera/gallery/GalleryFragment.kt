@@ -26,7 +26,7 @@ class GalleryFragment constructor(private val photosRepository: PhotosRepository
         }
     }
 
-    private val photosAdapter: ListAdapter<Photo, PhotoViewHolder> = GalleryAdapter()
+    private val photosAdapter: ListAdapter<Photo, PhotoViewHolder> by lazy { GalleryAdapter(requireContext()) }
 
     private val cameraDispatcher by lazy {
         externalIntentCameraDispatcher(
