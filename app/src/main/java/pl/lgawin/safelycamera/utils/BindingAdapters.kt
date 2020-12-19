@@ -1,4 +1,4 @@
-package pl.lgawin.safelycamera
+package pl.lgawin.safelycamera.utils
 
 import android.graphics.Bitmap
 import android.widget.ImageView

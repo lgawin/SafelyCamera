@@ -15,7 +15,7 @@ import pl.lgawin.safelycamera.camera.ExternalActivityCameraDispatcher.Companion.
 import pl.lgawin.safelycamera.databinding.FragmentGalleryBinding
 import pl.lgawin.safelycamera.domain.Photo
 import pl.lgawin.safelycamera.domain.PhotosRepository
-import pl.lgawin.safelycamera.toast
+import pl.lgawin.safelycamera.utils.toast
 
 class GalleryFragment constructor(private val photosRepository: PhotosRepository) : Fragment() {
 

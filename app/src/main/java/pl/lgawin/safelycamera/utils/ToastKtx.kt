@@ -1,4 +1,4 @@
-package pl.lgawin.safelycamera
+package pl.lgawin.safelycamera.utils
 
 import android.content.Context
 import android.widget.Toast

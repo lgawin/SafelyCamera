@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import pl.lgawin.safelycamera.R
 import pl.lgawin.safelycamera.camera.ExternalActivityCameraDispatcher.Companion.externalIntentCameraDispatcher
 import pl.lgawin.safelycamera.databinding.ActivityDevBinding
-import pl.lgawin.safelycamera.toast
+import pl.lgawin.safelycamera.utils.toast
 
 class DevActivity : AppCompatActivity() {
 
