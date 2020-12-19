@@ -1,0 +1,5 @@
+<resources>
+    <string name="prod_shortcut_short_label1">[Prod] SC</string>
+    <string name="prod_shortcut_long_label1">Production version</string>
+    <string name="prod_disabled_message1">Production version not available</string>
+</resources>
