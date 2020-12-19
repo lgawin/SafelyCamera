@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="pl.lgawin.safelycamera.login.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,8 +28,10 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@={vm.password}"
                 android:hint="@string/login_password_prompt"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -35,7 +40,7 @@
             android:id="@+id/loginButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:enabled="false"
+            android:enabled="@{vm.canProceed}"
             android:text="@string/login_button_label"
             app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />

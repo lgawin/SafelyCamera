@@ -21,10 +21,10 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return LoginFragmentBinding.inflate(inflater, container, false)
             .apply {
+                vm = viewModel
                 lifecycleOwner = viewLifecycleOwner
                 loginButton.setOnClickListener { findNavController().navigate(R.id.action_loginFragment_to_galleryFragment) }
             }
             .root
     }
-
 }
