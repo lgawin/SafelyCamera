@@ -8,6 +8,6 @@
     <fragment
         android:id="@+id/galleryFragment"
         tools:layout="@layout/fragment_gallery"
-        android:name="pl.lgawin.safelycamera.GalleryFragment"
+        android:name="pl.lgawin.safelycamera.gallery.GalleryFragment"
         android:label="GalleryFragment" />
 </navigation>

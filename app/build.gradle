@@ -51,6 +51,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
     implementation("androidx.fragment:fragment-ktx:$fragments_version")
     debugImplementation("androidx.fragment:fragment-testing:$fragments_version")
+    implementation("io.coil-kt:coil:1.1.0")
 
     testImplementation("junit:junit:4.13.1")
 
