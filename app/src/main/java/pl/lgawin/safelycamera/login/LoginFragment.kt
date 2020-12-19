@@ -12,19 +12,14 @@ import pl.lgawin.safelycamera.databinding.LoginFragmentBinding
 
 class LoginFragment : Fragment(R.layout.login_fragment) {
 
-    companion object {
-        fun newInstance() = LoginFragment()
-    }
-
     private val viewModel: LoginViewModel by viewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return LoginFragmentBinding.inflate(inflater, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        LoginFragmentBinding.inflate(inflater, container, false)
             .apply {
                 vm = viewModel
                 lifecycleOwner = viewLifecycleOwner
                 loginButton.setOnClickListener { findNavController().navigate(R.id.action_loginFragment_to_galleryFragment) }
             }
             .root
-    }
 }
