@@ -3,11 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/galleryFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
+        android:id="@+id/loginFragment"
+        android:name="pl.lgawin.safelycamera.login.LoginFragment"
+        android:label="login_fragment"
+        tools:layout="@layout/login_fragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_galleryFragment"
+            app:destination="@id/galleryFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
         android:id="@+id/galleryFragment"
-        tools:layout="@layout/fragment_gallery"
         android:name="pl.lgawin.safelycamera.gallery.GalleryFragment"
-        android:label="GalleryFragment" />
+        android:label="GalleryFragment"
+        tools:layout="@layout/fragment_gallery" />
 </navigation>
