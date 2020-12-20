@@ -70,4 +70,20 @@ class LoginFragmentShould : FragmentTest {
         verify { navController wasNot Called }
         assertThat(navController.currentDestination?.id).isEqualTo(R.id.loginFragment)
     }
+
+    @Test
+    fun showErrorForInvalidPasswordAndClearItWhenPasswordChanges() {
+        val authenticator = mockk<Authenticator>(relaxed = true) {
+            every { checkPassword(any()) } returns false
+        }
+        val navController = spyk(testNavController(R.navigation.nav_graph))
+        loginRobot(authenticator, navController) {
+            typePassword("OpenUp")
+            hideKeyboard()
+            login()
+            checkErrorShown("Incorrect password")
+            typePassword("Now")
+            checkNoError()
+        }
+    }
 }

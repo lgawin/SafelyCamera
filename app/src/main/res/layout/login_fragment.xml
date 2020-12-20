@@ -8,6 +8,9 @@
         <variable
             name="vm"
             type="pl.lgawin.safelycamera.login.LoginViewModel" />
+        <variable
+            name="loginError"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,6 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="32dp"
             app:endIconMode="password_toggle"
+            app:error="@{loginError}"
+            app:errorEnabled="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,9 +36,9 @@
                 android:id="@+id/passwordInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@={vm.password}"
                 android:hint="@string/login_password_prompt"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:text="@={vm.password}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button

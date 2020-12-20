@@ -18,6 +18,7 @@ import org.hamcrest.CoreMatchers.not
 import pl.lgawin.safelycamera.R
 import pl.lgawin.safelycamera.testing.FragmentTest
 import pl.lgawin.safelycamera.testing.TestRobot
+import pl.lgawin.safelycamera.testing.hasError
 
 internal class LoginRobot : TestRobot() {
 
@@ -31,6 +32,14 @@ internal class LoginRobot : TestRobot() {
 
     fun checkLoginEnabled() {
         loginButton.check(matches(isEnabled()))
+    }
+
+    fun checkErrorShown(errorMessage: String) {
+        onView(withText(errorMessage)).check(matches(isDisplayed()))
+    }
+
+    fun checkNoError() {
+        onView(withId(R.id.textInputLayout)).check(matches(not(hasError())))
     }
 
     // actions
