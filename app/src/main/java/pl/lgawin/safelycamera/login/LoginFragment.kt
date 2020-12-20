@@ -15,7 +15,7 @@ import pl.lgawin.safelycamera.utils.simpleFactory
 class LoginFragment(
     private val authenticator: Authenticator,
     private val tokenHolder: TokenHolder
-) : Fragment() {
+) : Fragment(), LoginHandler {
 
     private val viewModel: LoginViewModel by viewModels { simpleFactory { LoginViewModel(authenticator) } }
 
@@ -23,13 +23,19 @@ class LoginFragment(
         LoginFragmentBinding.inflate(inflater, container, false)
             .apply {
                 vm = viewModel
+                handler = this@LoginFragment
                 lifecycleOwner = viewLifecycleOwner
-                loginButton.setOnClickListener {
-                    viewModel.checkPassword(onSuccess = { token ->
-                        tokenHolder.token = token
-                        findNavController().navigate(R.id.action_loginFragment_to_galleryFragment)
-                    })
-                }
             }
             .root
+
+    override fun onLogin() {
+        viewModel.checkPassword(onSuccess = { token ->
+            tokenHolder.token = token
+            findNavController().navigate(R.id.action_loginFragment_to_galleryFragment)
+        })
+    }
+}
+
+interface LoginHandler {
+    fun onLogin()
 }

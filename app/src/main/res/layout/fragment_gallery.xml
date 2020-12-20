@@ -11,6 +11,10 @@
         <variable
             name="vm"
             type="pl.lgawin.safelycamera.gallery.GalleryViewModel" />
+
+        <variable
+            name="handler"
+            type="pl.lgawin.safelycamera.gallery.GalleryHandler" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -25,8 +29,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:adapter="@{adapter}"
-                app:spanCount="2"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2" />
         </FrameLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -35,7 +39,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
-            android:contentDescription="Take a photo"
+            android:contentDescription="@string/take_picture_label"
+            android:onClick="@{() -> handler.onTakePicture()}"
             app:srcCompat="@drawable/ic_camera" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

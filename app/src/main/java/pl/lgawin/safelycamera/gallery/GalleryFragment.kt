@@ -21,7 +21,7 @@ import pl.lgawin.safelycamera.utils.toast
 class GalleryFragment(
     private val photosRepository: PhotosRepository,
     private val photosStorage: PhotosStorage
-) : Fragment() {
+) : Fragment(), GalleryHandler {
 
     private val viewModel by viewModels<GalleryViewModel> {
         simpleFactory { GalleryViewModel(photosRepository) }
@@ -41,10 +41,10 @@ class GalleryFragment(
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragmentGalleryBinding.inflate(inflater, container, false)
             .apply {
-                floatingActionButton.setOnClickListener { cameraDispatcher.dispatchTakePicture() }
                 adapter = photosAdapter
                 vm = viewModel
-                lifecycleOwner = this@GalleryFragment
+                handler = this@GalleryFragment
+                lifecycleOwner = viewLifecycleOwner
             }
             .root
 
@@ -63,4 +63,12 @@ class GalleryFragment(
     companion object {
         private const val REQUEST_IMAGE_CAPTURE = 3452
     }
+
+    override fun onTakePicture() {
+        cameraDispatcher.dispatchTakePicture()
+    }
+}
+
+interface GalleryHandler {
+    fun onTakePicture()
 }

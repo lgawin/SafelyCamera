@@ -9,6 +9,10 @@
         <variable
             name="vm"
             type="pl.lgawin.safelycamera.login.LoginViewModel" />
+
+        <variable
+            name="handler"
+            type="pl.lgawin.safelycamera.login.LoginHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,6 +49,7 @@
             android:layout_height="wrap_content"
             android:enabled="@{vm.canProceed}"
             android:text="@string/login_button_label"
+            android:onClick="@{() -> handler.onLogin()}"
             app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
