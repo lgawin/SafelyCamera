@@ -20,12 +20,15 @@ class LoginViewModel(private val authenticator: Authenticator) : ViewModel() {
         password.observeForever(clearError)
     }
 
-    fun checkPassword(onSuccess: () -> Unit) {
-        if (authenticator.checkPassword(password.value.orEmpty())) {
-            onSuccess()
-        } else {
-            _errors.value = R.string.incorrect_password_error
-        }
+    fun checkPassword(onSuccess: (token: String) -> Unit) {
+        authenticator.checkPassword(password.value.orEmpty())
+            ?.takeUnless { it.isBlank() }
+            ?.let { token -> onSuccess(token) }
+            ?: riseError()
+    }
+
+    private fun riseError() {
+        _errors.value = R.string.incorrect_password_error
     }
 
     override fun onCleared() {

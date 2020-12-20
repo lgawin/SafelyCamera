@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import pl.lgawin.safelycamera.R
 import pl.lgawin.safelycamera.databinding.LoginFragmentBinding
 import pl.lgawin.safelycamera.utils.simpleFactory
 
@@ -23,8 +22,9 @@ class LoginFragment(private val authenticator: Authenticator) : Fragment() {
                 vm = viewModel
                 lifecycleOwner = viewLifecycleOwner
                 loginButton.setOnClickListener {
-                    viewModel.checkPassword(onSuccess = {
-                        findNavController().navigate(R.id.action_loginFragment_to_galleryFragment)
+                    viewModel.checkPassword(onSuccess = { token ->
+                        val direction = LoginFragmentDirections.actionLoginFragmentToGalleryFragment(token)
+                        findNavController().navigate(direction)
                     })
                 }
             }

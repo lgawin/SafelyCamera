@@ -20,5 +20,9 @@
         android:id="@+id/galleryFragment"
         android:name="pl.lgawin.safelycamera.gallery.GalleryFragment"
         android:label="GalleryFragment"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_gallery" >
+        <argument
+            android:name="securityToken"
+            app:argType="string" />
+    </fragment>
 </navigation>

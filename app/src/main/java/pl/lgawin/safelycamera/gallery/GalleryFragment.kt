@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ListAdapter
 import pl.lgawin.safelycamera.camera.ExternalActivityCameraDispatcher.Companion.externalIntentCameraDispatcher
 import pl.lgawin.safelycamera.databinding.FragmentGalleryBinding
@@ -31,6 +32,8 @@ class GalleryFragment constructor(private val photosRepository: PhotosRepository
             onResult = { viewModel.refresh() },
         ) { toast("RESULT_CANCELED") }
     }
+
+    private val args by navArgs<GalleryFragmentArgs>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragmentGalleryBinding.inflate(inflater, container, false)

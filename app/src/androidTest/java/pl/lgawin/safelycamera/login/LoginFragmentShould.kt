@@ -15,14 +15,14 @@ class LoginFragmentShould : FragmentTest {
 
     @Test
     fun disableLoginButtonAtStart() {
-        loginRobot() {
+        loginRobot {
             checkLoginDisabled()
         }
     }
 
     @Test
     fun enableButtonWhenPasswordIsEntered() {
-        loginRobot() {
+        loginRobot {
             typePassword("Password")
             hideKeyboard()
             checkLoginEnabled()
@@ -45,7 +45,7 @@ class LoginFragmentShould : FragmentTest {
     @Test
     fun switchToGalleryAfterSuccessfulPasswordValidation() {
         val authenticator = mockk<Authenticator>(relaxed = true) {
-            every { checkPassword(any()) } returns true
+            every { checkPassword(any()) } returns "security token"
         }
         val navController = testNavController(R.navigation.nav_graph)
         loginRobot(authenticator, navController) {
@@ -58,9 +58,7 @@ class LoginFragmentShould : FragmentTest {
 
     @Test
     fun stayOnLoginScreenWhenPasswordInvalid() {
-        val authenticator = mockk<Authenticator>(relaxed = true) {
-            every { checkPassword(any()) } returns false
-        }
+        val authenticator = mockk<Authenticator>(relaxed = true)
         val navController = spyk(testNavController(R.navigation.nav_graph))
         loginRobot(authenticator, navController) {
             typePassword("OpenUp")
@@ -73,9 +71,7 @@ class LoginFragmentShould : FragmentTest {
 
     @Test
     fun showErrorForInvalidPasswordAndClearItWhenPasswordChanges() {
-        val authenticator = mockk<Authenticator>(relaxed = true) {
-            every { checkPassword(any()) } returns false
-        }
+        val authenticator = mockk<Authenticator>(relaxed = true)
         val navController = spyk(testNavController(R.navigation.nav_graph))
         loginRobot(authenticator, navController) {
             typePassword("OpenUp")
