@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -8,9 +9,6 @@
         <variable
             name="vm"
             type="pl.lgawin.safelycamera.login.LoginViewModel" />
-        <variable
-            name="loginError"
-            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,12 +23,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="32dp"
             app:endIconMode="password_toggle"
-            app:error="@{loginError}"
             app:errorEnabled="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            bind:error="@{vm.errors}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordInput"
