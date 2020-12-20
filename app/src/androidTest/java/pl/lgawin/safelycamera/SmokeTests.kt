@@ -18,7 +18,7 @@ class SmokeTests {
             checkLoginDisabled()
             hideKeyboard()
             screenshot("1.Start")
-            typePassword("passwd")
+            typePassword("p@ssword")
             hideKeyboard()
             screenshot("2.Ready to login")
             login()

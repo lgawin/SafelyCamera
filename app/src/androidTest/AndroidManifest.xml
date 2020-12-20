@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.package">
+
+    <!--
+        Workaround for MockK issue on Android 28+
+        https://github.com/mockk/mockk/issues/297#issuecomment-641361770
+    -->
+    <application android:extractNativeLibs="true" />
+</manifest>

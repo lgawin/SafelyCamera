@@ -8,22 +8,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ListAdapter
 import pl.lgawin.safelycamera.camera.ExternalActivityCameraDispatcher.Companion.externalIntentCameraDispatcher
 import pl.lgawin.safelycamera.databinding.FragmentGalleryBinding
 import pl.lgawin.safelycamera.domain.Photo
 import pl.lgawin.safelycamera.domain.PhotosRepository
+import pl.lgawin.safelycamera.utils.simpleFactory
 import pl.lgawin.safelycamera.utils.toast
 
 class GalleryFragment constructor(private val photosRepository: PhotosRepository) : Fragment() {
 
     private val viewModel by viewModels<GalleryViewModel> {
-        object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T = GalleryViewModel(photosRepository) as T
-        }
+        simpleFactory { GalleryViewModel(photosRepository) }
     }
 
     private val photosAdapter: ListAdapter<Photo, PhotoViewHolder> by lazy { GalleryAdapter(requireContext()) }

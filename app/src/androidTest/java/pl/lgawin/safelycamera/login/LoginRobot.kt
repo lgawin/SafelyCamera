@@ -12,10 +12,11 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import io.mockk.mockk
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.not
-import pl.lgawin.safelycamera.testing.FragmentTest
 import pl.lgawin.safelycamera.R
+import pl.lgawin.safelycamera.testing.FragmentTest
 import pl.lgawin.safelycamera.testing.TestRobot
 
 internal class LoginRobot : TestRobot() {
@@ -48,10 +49,11 @@ internal class LoginRobot : TestRobot() {
 
 @Suppress("unused")
 internal fun FragmentTest.loginRobot(
+    authenticator: Authenticator = mockk(relaxed = true),
     navController: TestNavHostController? = null,
     function: LoginRobot.() -> Unit
 ): LoginRobot {
-    launchFragmentInContainer<LoginFragment>(themeResId = R.style.Theme_SafelyCamera)
+    launchFragmentInContainer(themeResId = R.style.Theme_SafelyCamera) { LoginFragment(authenticator) }
         .onFragment { fragment ->
             navController?.let { Navigation.setViewNavController(fragment.requireView(), it) }
         }

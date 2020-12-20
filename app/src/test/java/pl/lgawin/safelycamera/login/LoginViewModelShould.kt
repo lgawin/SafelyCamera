@@ -2,13 +2,14 @@ package pl.lgawin.safelycamera.login
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
+import io.mockk.mockk
 import org.junit.Rule
 import org.junit.Test
 import pl.lgawin.safelycamera.testing.getOrAwaitValue
 
 internal class LoginViewModelShould {
 
-    val viewModel = LoginViewModel()
+    val viewModel = LoginViewModel(mockk())
 
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
