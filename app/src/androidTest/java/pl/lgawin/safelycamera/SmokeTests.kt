@@ -18,21 +18,25 @@ class SmokeTests {
             checkLoginDisabled()
             hideKeyboard()
             screenshot("1.Start")
-            typePassword("p@ssword")
+            typePassword("p@ss")
             hideKeyboard()
-            screenshot("2.Ready to login")
+            login()
+            screenshot("2.Incorrect password")
+            typePassword("word")
+            hideKeyboard()
+            screenshot("3.Ready to login")
             login()
         }
         galleryRobot {
-            screenshot("3.Gallery - empty")
+            screenshot("4.Gallery - empty")
             startCamera()
         }
         cameraRobot {
-            screenshot("4.Camera")
+            screenshot("5.Camera")
             takePhoto()
         }
         galleryRobot {
-            screenshot("5.Gallery - one photo")
+            screenshot("6.Gallery - one photo")
             startCamera()
         }
         cameraRobot {
@@ -40,7 +44,7 @@ class SmokeTests {
             takePhoto()
         }
         galleryRobot {
-            screenshot("6.Gallery - two photos")
+            screenshot("7.Gallery - two photos")
         }
     }
 }

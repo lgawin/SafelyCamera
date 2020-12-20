@@ -12,18 +12,18 @@ import android.provider.MediaStore
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import pl.lgawin.safelycamera.BuildConfig
-import pl.lgawin.safelycamera.serviceLocator
+import pl.lgawin.safelycamera.storage.PhotosStorage
 import java.io.File
 
 class ExternalActivityCameraDispatcher(
     private val context: Context,
+    private val storage: PhotosStorage,
     private val onResult: (Bitmap?) -> Unit,
     private val onCancel: () -> Unit,
-    private val startActivityForResult: (Intent) -> Unit
+    private val startActivityForResult: (Intent) -> Unit,
 ) : CameraDispatcher {
 
     private var file: File? = null
-    private val storage = context.serviceLocator.photosStorage
 
     override fun dispatchTakePicture(): File? {
         file = storage.createTempFile()
@@ -70,21 +70,35 @@ class ExternalActivityCameraDispatcher(
 
         fun externalIntentCameraDispatcher(
             activity: Activity,
+            storage: PhotosStorage,
             requestCode: Int,
             onResult: (Bitmap?) -> Unit,
             onCancel: () -> Unit
-        ) = ExternalActivityCameraDispatcher(activity, onResult, onCancel) {
-            activity.startActivityForResult(it, requestCode)
-        }
+        ) = ExternalActivityCameraDispatcher(
+            activity,
+            storage,
+            onResult,
+            onCancel,
+            {
+                activity.startActivityForResult(it, requestCode)
+            }
+        )
 
         fun externalIntentCameraDispatcher(
             fragment: Fragment,
+            storage: PhotosStorage,
             requestCode: Int,
             onResult: (Bitmap?) -> Unit,
             onCancel: () -> Unit
-        ) = ExternalActivityCameraDispatcher(fragment.requireContext(), onResult, onCancel) {
-            fragment.startActivityForResult(it, requestCode)
-        }
+        ) = ExternalActivityCameraDispatcher(
+            fragment.requireContext(),
+            storage,
+            onResult,
+            onCancel,
+            {
+                fragment.startActivityForResult(it, requestCode)
+            }
+        )
     }
 }
 

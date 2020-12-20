@@ -9,10 +9,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import pl.lgawin.safelycamera.R
 import pl.lgawin.safelycamera.databinding.LoginFragmentBinding
-import pl.lgawin.safelycamera.serviceLocator
+import pl.lgawin.safelycamera.security.TokenHolder
 import pl.lgawin.safelycamera.utils.simpleFactory
 
-class LoginFragment(private val authenticator: Authenticator) : Fragment() {
+class LoginFragment(
+    private val authenticator: Authenticator,
+    private val tokenHolder: TokenHolder
+) : Fragment() {
 
     private val viewModel: LoginViewModel by viewModels { simpleFactory { LoginViewModel(authenticator) } }
 
@@ -23,7 +26,7 @@ class LoginFragment(private val authenticator: Authenticator) : Fragment() {
                 lifecycleOwner = viewLifecycleOwner
                 loginButton.setOnClickListener {
                     viewModel.checkPassword(onSuccess = { token ->
-                        requireContext().serviceLocator.token = token
+                        tokenHolder.token = token
                         findNavController().navigate(R.id.action_loginFragment_to_galleryFragment)
                     })
                 }

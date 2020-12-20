@@ -4,13 +4,15 @@ import android.content.Context
 import pl.lgawin.safelycamera.domain.PhotosRepository
 import pl.lgawin.safelycamera.login.StubbedAuthenticator
 import pl.lgawin.safelycamera.security.Ciphers
+import pl.lgawin.safelycamera.security.CryptoConfiguration
 import pl.lgawin.safelycamera.security.PasswordBasedKeyProvider
+import pl.lgawin.safelycamera.security.TokenHolder
 import pl.lgawin.safelycamera.storage.PhotosStorage
 
 internal class ServiceLocator private constructor(context: Context) {
 
-    lateinit var token: String
-    private val ciphers by lazy { Ciphers(PasswordBasedKeyProvider(token)) }
+    val tokenHolder: TokenHolder = CryptoConfiguration
+    private val ciphers by lazy { Ciphers(PasswordBasedKeyProvider(tokenHolder)) }
     val photosStorage by lazy { PhotosStorage(context, ciphers) }
     val photosRepository: PhotosRepository get() = photosStorage
     val authenticator = StubbedAuthenticator()
@@ -21,7 +23,7 @@ internal class ServiceLocator private constructor(context: Context) {
         @Synchronized
         private fun newServiceLocator(context: Context): ServiceLocator {
             serviceLocator?.let { return it }
-            val newServiceLocator = ServiceLocator(context)
+            val newServiceLocator = ServiceLocator(context,)
             serviceLocator = newServiceLocator
             return newServiceLocator
         }

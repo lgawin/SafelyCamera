@@ -6,11 +6,16 @@ import javax.crypto.SecretKey
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.PBEKeySpec
 
-class PasswordBasedKeyProvider(private val password: String) : KeyProvider {
+class PasswordBasedKeyProvider(private val tokenHolder: TokenHolder) : KeyProvider {
+
+    private val token: String
+        get() = tokenHolder.token.orEmpty()
 
     override val key: SecretKey by lazy {
-        val salt = MessageDigest.getInstance("SHA-512").digest(password.toByteArray())
-        val keySpec: KeySpec = PBEKeySpec(password.toCharArray(), salt, 10000, 256)
-        SecretKeyFactory.getInstance(CryptoConfiguration.algorithm).generateSecret(keySpec)
+        with(token) {
+            val salt = MessageDigest.getInstance("SHA-512").digest(toByteArray())
+            val keySpec: KeySpec = PBEKeySpec(toCharArray(), salt, 10000, 256)
+            SecretKeyFactory.getInstance(CryptoConfiguration.algorithm).generateSecret(keySpec)
+        }
     }
 }

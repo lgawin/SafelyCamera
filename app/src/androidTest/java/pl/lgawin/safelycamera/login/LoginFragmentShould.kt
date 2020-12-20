@@ -9,6 +9,7 @@ import io.mockk.spyk
 import io.mockk.verify
 import org.junit.Test
 import pl.lgawin.safelycamera.R
+import pl.lgawin.safelycamera.security.TokenHolder
 import pl.lgawin.safelycamera.testing.FragmentTest
 
 class LoginFragmentShould : FragmentTest {
@@ -54,6 +55,23 @@ class LoginFragmentShould : FragmentTest {
             login()
         }
         assertThat(navController.currentDestination?.id).isEqualTo(R.id.galleryFragment)
+    }
+
+    @Test
+    fun storesSecureTokenAfterSuccessfulPasswordValidation() {
+        val authenticator = mockk<Authenticator>(relaxed = true) {
+            every { checkPassword(any()) } returns "security token"
+        }
+        val navController = testNavController(R.navigation.nav_graph)
+        val tokenHolder = object: TokenHolder {
+            override var token: String? = null
+        }
+        loginRobot(authenticator, navController, tokenHolder) {
+            typePassword("OpenUp")
+            hideKeyboard()
+            login()
+        }
+        assertThat(tokenHolder.token).isEqualTo("security token")
     }
 
     @Test

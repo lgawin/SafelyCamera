@@ -13,8 +13,14 @@ class MainActivity : AppCompatActivity() {
         get() = object : FragmentFactory() {
             override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
                 return when (className) {
-                    GalleryFragment::class.java.name -> GalleryFragment(serviceLocator.photosRepository)
-                    LoginFragment::class.java.name -> LoginFragment(serviceLocator.authenticator)
+                    GalleryFragment::class.java.name -> GalleryFragment(
+                        serviceLocator.photosRepository,
+                        serviceLocator.photosStorage
+                    )
+                    LoginFragment::class.java.name -> LoginFragment(
+                        serviceLocator.authenticator,
+                        serviceLocator.tokenHolder
+                    )
                     else -> super.instantiate(classLoader, className)
                 }
             }

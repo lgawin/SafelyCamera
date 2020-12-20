@@ -16,6 +16,7 @@ import io.mockk.mockk
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.not
 import pl.lgawin.safelycamera.R
+import pl.lgawin.safelycamera.security.TokenHolder
 import pl.lgawin.safelycamera.testing.FragmentTest
 import pl.lgawin.safelycamera.testing.TestRobot
 import pl.lgawin.safelycamera.testing.hasError
@@ -60,9 +61,10 @@ internal class LoginRobot : TestRobot() {
 internal fun FragmentTest.loginRobot(
     authenticator: Authenticator = mockk(relaxed = true),
     navController: TestNavHostController? = null,
+    tokenHolder: TokenHolder = mockk(relaxed = true),
     function: LoginRobot.() -> Unit
 ): LoginRobot {
-    launchFragmentInContainer(themeResId = R.style.Theme_SafelyCamera) { LoginFragment(authenticator) }
+    launchFragmentInContainer(themeResId = R.style.Theme_SafelyCamera) { LoginFragment(authenticator, tokenHolder) }
         .onFragment { fragment ->
             navController?.let { Navigation.setViewNavController(fragment.requireView(), it) }
         }
