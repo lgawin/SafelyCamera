@@ -9,8 +9,6 @@ import pl.lgawin.safelycamera.login.LoginFragment
 
 class MainActivity : AppCompatActivity() {
 
-    private val serviceLocator by lazy { ServiceLocator(this)}
-
     private val customFragmentFactory
         get() = object : FragmentFactory() {
             override fun instantiate(classLoader: ClassLoader, className: String): Fragment {

@@ -9,12 +9,12 @@ import pl.lgawin.safelycamera.R
 
 class LoginViewModel(private val authenticator: Authenticator) : ViewModel() {
 
+    private val _errors = MutableLiveData<Int>()
+    private val clearError = Observer<String> { _errors.value = null }
+
     val password = MutableLiveData("")
     val canProceed = password.map { it.isNotEmpty() }
-    private val _errors = MutableLiveData<Int>()
     val errors: LiveData<Int> get() = _errors
-
-    private val clearError = Observer<String> { _errors.value = null }
 
     init {
         password.observeForever(clearError)

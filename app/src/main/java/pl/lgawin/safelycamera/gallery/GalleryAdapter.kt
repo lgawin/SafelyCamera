@@ -15,14 +15,14 @@ import coil.util.DebugLogger
 import pl.lgawin.safelycamera.BuildConfig
 import pl.lgawin.safelycamera.R
 import pl.lgawin.safelycamera.domain.Photo
-import pl.lgawin.safelycamera.storage.PhotosStorage
+import pl.lgawin.safelycamera.serviceLocator
 import java.io.File
 
 class GalleryAdapter(context: Context) : ListAdapter<String, PhotoViewHolder>(PhotoItemDiffCallback()) {
 
     private val loader = ImageLoader.Builder(context).run {
         if (BuildConfig.DEBUG) logger(DebugLogger())
-        componentRegistry { add(decryptingFetcher(PhotosStorage(context))) }
+        componentRegistry { add(decryptingFetcher(context.serviceLocator.photosStorage)) }
         build()
     }
 

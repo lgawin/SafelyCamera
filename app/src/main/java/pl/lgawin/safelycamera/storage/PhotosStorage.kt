@@ -19,11 +19,16 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class PhotosStorage(private val directory: File, private val tempDir: File) : PhotosRepository {
+class PhotosStorage(
+    private val directory: File,
+    private val tempDir: File,
+    private val ciphers: Ciphers
+) : PhotosRepository {
 
-    constructor(context: Context) : this(
+    constructor(context: Context, ciphers: Ciphers) : this(
         context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!,
-        context.externalCacheDir ?: context.cacheDir
+        context.externalCacheDir ?: context.cacheDir,
+        ciphers
     )
 
     fun createTempFile(): File {
@@ -43,14 +48,14 @@ class PhotosStorage(private val directory: File, private val tempDir: File) : Ph
     }
 
     fun secureSink(file: File): Sink {
-        val cipher = Ciphers.encryptMode()
+        val cipher = ciphers.encryptMode()
         val fileName = file.nameWithoutExtension + "." + cipher.iv.toHexString()
         return File(directory, fileName).sink().cipherSink(cipher)
     }
 
     fun secureSource(data: File): Source {
         val iv = data.extension.byteArrayFromHexString()
-        return data.source().cipherSource(Ciphers.decryptMode(iv))
+        return data.source().cipherSource(ciphers.decryptMode(iv))
     }
 
     override suspend fun getPhotos(): List<Photo> = directory.listFiles()?.toList().orEmpty().map { it.absolutePath }

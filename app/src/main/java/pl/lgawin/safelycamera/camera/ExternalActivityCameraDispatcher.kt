@@ -12,7 +12,7 @@ import android.provider.MediaStore
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import pl.lgawin.safelycamera.BuildConfig
-import pl.lgawin.safelycamera.storage.PhotosStorage
+import pl.lgawin.safelycamera.serviceLocator
 import java.io.File
 
 class ExternalActivityCameraDispatcher(
@@ -23,7 +23,7 @@ class ExternalActivityCameraDispatcher(
 ) : CameraDispatcher {
 
     private var file: File? = null
-    private val storage = PhotosStorage(context)
+    private val storage = context.serviceLocator.photosStorage
 
     override fun dispatchTakePicture(): File? {
         file = storage.createTempFile()
