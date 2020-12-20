@@ -1,4 +1,4 @@
-package pl.lgawin.safelycamera
+package pl.lgawin.safelycamera.testing
 
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider

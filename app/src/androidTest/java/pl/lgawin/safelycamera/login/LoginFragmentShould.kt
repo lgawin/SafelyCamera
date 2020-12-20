@@ -2,7 +2,7 @@ package pl.lgawin.safelycamera.login
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
-import pl.lgawin.safelycamera.FragmentTest
+import pl.lgawin.safelycamera.testing.FragmentTest
 import pl.lgawin.safelycamera.R
 
 class LoginFragmentShould: FragmentTest {

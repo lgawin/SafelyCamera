@@ -14,7 +14,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.not
-import pl.lgawin.safelycamera.FragmentTest
+import pl.lgawin.safelycamera.testing.FragmentTest
 import pl.lgawin.safelycamera.R
 import pl.lgawin.safelycamera.testing.TestRobot
 
