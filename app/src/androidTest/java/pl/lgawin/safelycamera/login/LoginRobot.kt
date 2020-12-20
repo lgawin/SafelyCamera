@@ -8,20 +8,24 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.not
 import pl.lgawin.safelycamera.FragmentTest
 import pl.lgawin.safelycamera.R
+import pl.lgawin.safelycamera.testing.TestRobot
 
-class LoginRobot {
+internal class LoginRobot : TestRobot() {
+
     private val loginButton get() = onView(withText("Login"))
     private val passwordInput get() = onView(withId(R.id.passwordInput))
 
     // checks
     fun checkLoginDisabled() {
-        loginButton.check(matches(not(isEnabled())))
+        loginButton.check(matches(allOf(isDisplayed(), not(isEnabled()))))
     }
 
     fun checkLoginEnabled() {
@@ -40,14 +44,18 @@ class LoginRobot {
     fun hideKeyboard() {
         Espresso.closeSoftKeyboard()
     }
-
 }
 
 @Suppress("unused")
-fun FragmentTest.loginRobot(navController: TestNavHostController? = null, function: LoginRobot.() -> Unit): LoginRobot {
+internal fun FragmentTest.loginRobot(
+    navController: TestNavHostController? = null,
+    function: LoginRobot.() -> Unit
+): LoginRobot {
     launchFragmentInContainer<LoginFragment>(themeResId = R.style.Theme_SafelyCamera)
         .onFragment { fragment ->
             navController?.let { Navigation.setViewNavController(fragment.requireView(), it) }
         }
-    return LoginRobot().apply(function)
+    return loginRobot(function)
 }
+
+internal fun loginRobot(function: LoginRobot.() -> Unit) = LoginRobot().apply(function)
