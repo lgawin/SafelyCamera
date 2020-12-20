@@ -1,17 +1,8 @@
-buildscript {
-    repositories {
-        google()
-    }
-    dependencies {
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
-    }
-}
 plugins {
     id "com.android.application"
     id "kotlin-android"
     id "kotlin-kapt"
 }
-apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion 29
@@ -48,6 +39,7 @@ android {
 }
 
 dependencies {
+    def nav_version = "2.3.2"
     def fragments_version = "1.2.5"
     def lifecycle_version = "2.2.0"
     def mockk_version = "1.10.3-jdk8"
