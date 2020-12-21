@@ -1,6 +1,5 @@
 package pl.lgawin.safelycamera.gallery
 
-import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -11,22 +10,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.load
-import coil.util.DebugLogger
-import pl.lgawin.safelycamera.BuildConfig
 import pl.lgawin.safelycamera.R
 import pl.lgawin.safelycamera.domain.Photo
-import pl.lgawin.safelycamera.serviceLocator
 import java.io.File
 
-class GalleryAdapter(context: Context) : ListAdapter<String, PhotoViewHolder>(PhotoItemDiffCallback()) {
+class GalleryAdapter(
+    private val imageLoader: ImageLoader
+) : ListAdapter<String, PhotoViewHolder>(PhotoItemDiffCallback()) {
 
-    private val loader = ImageLoader.Builder(context).run {
-        if (BuildConfig.DEBUG) logger(DebugLogger())
-        componentRegistry { add(decryptingFetcher(context.serviceLocator.photosStorage)) }
-        build()
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PhotoViewHolder(loader, parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PhotoViewHolder(imageLoader, parent)
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) = holder.bind(getItem(position))
 }

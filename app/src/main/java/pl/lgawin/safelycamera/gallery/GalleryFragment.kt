@@ -20,14 +20,13 @@ import pl.lgawin.safelycamera.utils.toast
 
 class GalleryFragment(
     private val photosRepository: PhotosRepository,
-    private val photosStorage: PhotosStorage
+    private val photosStorage: PhotosStorage,
+    private val photosAdapter: ListAdapter<Photo, *>
 ) : Fragment(), GalleryHandler {
 
     private val viewModel by viewModels<GalleryViewModel> {
         simpleFactory { GalleryViewModel(photosRepository) }
     }
-
-    private val photosAdapter: ListAdapter<Photo, *> by lazy { GalleryAdapter(requireContext()) }
 
     private val cameraDispatcher: CameraDispatcher by lazy {
         externalIntentCameraDispatcher(
