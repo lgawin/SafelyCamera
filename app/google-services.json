@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "605721492296",
+    "project_id": "safelycamera",
+    "storage_bucket": "safelycamera.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605721492296:android:286165979bb1fe4d6c517d",
+        "android_client_info": {
+          "package_name": "pl.lgawin.safelycamera"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "605721492296-q4o7d59u9tf4cr3fm1gc8o2cc8uiup2b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRd9VUYVi0TTjbG3ljd2MEmgjrzqRU_gA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "605721492296-q4o7d59u9tf4cr3fm1gc8o2cc8uiup2b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

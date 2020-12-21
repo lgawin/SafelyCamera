@@ -12,6 +12,8 @@ plugins {
     id "kotlin-kapt"
 }
 apply plugin: "koin"
+apply plugin: "com.google.gms.google-services"
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 29
@@ -72,6 +74,9 @@ dependencies {
     implementation("org.koin:koin-android:$koin_version")
     implementation("org.koin:koin-androidx-fragment:$koin_version")
     implementation("org.koin:koin-android-viewmodel:$koin_version")
+    implementation platform('com.google.firebase:firebase-bom:26.2.0')
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 
     testImplementation("junit:junit:4.13.1")
     testImplementation("androidx.arch.core:core-testing:2.1.0")
