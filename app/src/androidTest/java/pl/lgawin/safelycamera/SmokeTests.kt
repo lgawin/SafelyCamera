@@ -22,7 +22,7 @@ class SmokeTests {
             hideKeyboard()
             login()
             screenshot("2.Incorrect password")
-            typePassword("word")
+            typePassword("w0rd")
             hideKeyboard()
             screenshot("3.Ready to login")
             login()
