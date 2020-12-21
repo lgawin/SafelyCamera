@@ -1,16 +1,15 @@
 package pl.lgawin.safelycamera.utils
 
-import android.graphics.Bitmap
-import android.widget.ImageView
+import android.view.View
 import androidx.databinding.BindingAdapter
 import com.google.android.material.textfield.TextInputLayout
 
-@BindingAdapter("bitmap")
-fun setBitmap(view: ImageView, bitmap: Bitmap?) {
-    view.setImageBitmap(bitmap)
+@BindingAdapter("visible")
+fun setVisible(view: View, visible: Boolean) {
+    view.visibility = if (visible) View.VISIBLE else View.GONE
 }
 
 @BindingAdapter("error")
-fun setBitmap(view: TextInputLayout, resId: Int?) {
+fun setError(view: TextInputLayout, resId: Int?) {
     view.error = resId?.let { view.context.getString(it) }
 }

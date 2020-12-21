@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -30,7 +31,16 @@
                 android:layout_height="match_parent"
                 app:adapter="@{adapter}"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2" />
+                app:spanCount="2"
+                bind:visible="@{!vm.isEmpty}" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Start taking photos"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                bind:visible="@{vm.isEmpty}" />
         </FrameLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

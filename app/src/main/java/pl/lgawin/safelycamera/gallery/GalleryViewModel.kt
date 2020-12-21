@@ -3,6 +3,7 @@ package pl.lgawin.safelycamera.gallery
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import pl.lgawin.safelycamera.domain.Photo
@@ -12,6 +13,7 @@ class GalleryViewModel(private val photosRepository: PhotosRepository) : ViewMod
 
     private val _photos = MutableLiveData<List<Photo>>()
     val photos: LiveData<List<Photo>> get() = _photos
+    val isEmpty = photos.map { it.isEmpty() }
 
     init {
         loadPhotos()
