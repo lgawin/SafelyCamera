@@ -7,4 +7,5 @@
     <string name="fatal_error_title">Fatal error</string>
     <string name="fatal_error_message">Something wrong happened. We cannot continue\n[details: %s1$]</string>
     <string name="fatal_error_action">Exit</string>
+    <string name="start_taking_photos">Start taking photos</string>
 </resources>

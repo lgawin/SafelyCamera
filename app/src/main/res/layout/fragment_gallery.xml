@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Start taking photos"
+                android:text="@string/start_taking_photos"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 bind:visible="@{vm.isEmpty}" />
         </FrameLayout>
@@ -51,6 +51,7 @@
             android:layout_margin="16dp"
             android:contentDescription="@string/take_picture_label"
             android:onClick="@{() -> handler.onTakePicture()}"
+            app:backgroundTint="?colorSecondary"
             app:srcCompat="@drawable/ic_camera" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
