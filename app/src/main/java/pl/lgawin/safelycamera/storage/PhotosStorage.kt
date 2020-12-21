@@ -11,10 +11,13 @@ import okio.sink
 import okio.source
 import pl.lgawin.safelycamera.domain.Photo
 import pl.lgawin.safelycamera.domain.PhotosRepository
+import pl.lgawin.safelycamera.login.LoginRequiredException
 import pl.lgawin.safelycamera.security.Ciphers
+import pl.lgawin.safelycamera.security.CryptoConfiguration
 import pl.lgawin.safelycamera.utils.byteArrayFromHexString
 import pl.lgawin.safelycamera.utils.toHexString
 import java.io.File
+import java.lang.IllegalStateException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -58,5 +61,8 @@ class PhotosStorage(
         return data.source().cipherSource(ciphers.decryptMode(iv))
     }
 
-    override suspend fun getPhotos(): List<Photo> = directory.listFiles()?.toList().orEmpty().map { it.absolutePath }
+    override suspend fun getPhotos(): List<Photo> {
+        if (CryptoConfiguration.token.isNullOrBlank()) throw LoginRequiredException()
+        return directory.listFiles()?.toList().orEmpty().map { it.absolutePath }
+    }
 }
